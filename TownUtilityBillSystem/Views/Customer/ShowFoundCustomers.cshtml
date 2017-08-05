@@ -1,0 +1,116 @@
+﻿
+@model TownUtilityBillSystem.Models.CustomerModel
+
+@{
+    ViewBag.Title = "ShowFoundCustomers";
+    int rowNumber = 1;
+}
+
+<style>
+    mark {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+
+@if (Model.Customers.Count == 0)
+{
+    <h2>No any customer is found</h2>
+}
+
+else if (Model.Customers.Count == 1)
+{
+    <h2>Found 1 customer</h2>
+}
+else
+{
+    <h2>Found @Model.Customers.Count customers</h2>
+}
+
+<h4>Search filter: <mark> <strong> @ViewBag.SearchString </strong></mark></h4>
+
+@if (Model.Customers.Count != 0)
+{
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Account #</th>
+            <th>Surname/Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Type</th>
+            <th>Index</th>
+            <th>Town</th>
+            <th>Street</th>
+            <th>Building</th>
+            <th>Flat/Part</th>
+            <th>Options</th>
+        </tr>
+
+
+        @foreach (var item in Model.Customers)
+        {
+            <tr>
+                <td>@(rowNumber++)</td>
+                <td>
+                    @Html.DisplayFor(model => item.Account)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Surname) @Html.DisplayFor(model => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CustomerType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Address.Index.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Address.Town.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Address.Street.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Address.Building.Number)
+                </td>
+
+                @if (item.Address.FlatPart == null)
+                {
+                    <td>
+                        <text>--</text>
+                    </td>
+                }
+                else if (!String.IsNullOrEmpty(item.Address.FlatPart.Name))
+                {
+                    <td>
+                        @Html.DisplayFor(model => item.Address.FlatPart.Name)
+                    </td>
+                }
+                else if (item.Address.FlatPart.Number != 0 && !String.IsNullOrEmpty(item.Address.FlatPart.Number.ToString()))
+                {
+                    <td>
+                        @Html.DisplayFor(model => item.Address.FlatPart.Number)
+                    </td>
+                }
+
+                <td>
+                    @Html.ActionLink("Details", "ShowDetailsForCustomer", new { customerId = item.Id }) |
+                    @Html.ActionLink("Bills", "ShowAllBillsForCustomer", "Bill", new { customerId = item.Id }, null) |
+                    @Html.ActionLink("Edit", "EditCustomer", new { customerId = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteCustomer", new { customerId = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+

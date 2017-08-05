@@ -1,0 +1,132 @@
+﻿@model TownUtilityBillSystem.Models.CalculatorItemModel
+
+@{
+    ViewBag.Title = "ShowCharges";
+    int i = 0;
+    int elIndex = 0;
+    int waterIndex = 1;
+    int heatIndex = 2;
+    int gasIndex = 3;
+}
+
+<h3><strong>Calculations:</strong> </h3>
+
+@if (Model.ElectricUsage > 0)
+{
+    <img src=@Model.Utilities[elIndex].ImageIconPath style="width:auto; height:40px" />
+    <font color="red" size="4"> <strong>@Model.Utilities[elIndex].Name.ToUpper()</strong></font>
+    if (Model.ElectricUsage > (float)Model.Utilities[elIndex].UsageForStandartPrice)
+    {
+        var usageWithBiggerPrice = Model.ElectricUsage - (float)Model.Utilities[elIndex].UsageForStandartPrice;
+
+        <font size="4">
+            : <strong>@Math.Round(Model.Utilities[elIndex].UsageForStandartPrice, 0) </strong> @Model.Utilities[elIndex].Unit.Name
+            x <strong>
+                @Model.Utilities[elIndex].Price
+            </strong> @Model.Currency.Name + <strong>
+                @usageWithBiggerPrice
+            </strong> @Model.Utilities[elIndex].Unit.Name
+            x <strong> @Model.Utilities[elIndex].BigUsagePrice </strong> @Model.Currency.Name= <strong> @Model.ElCharges </strong> @Model.Currency.Name;
+        </font>        
+    }
+    else
+    {
+        <font size="4">
+            : <strong>@Math.Round(Model.ElectricUsage, 2) </strong> @Model.Utilities[elIndex].Unit.Name
+            x <strong> @Model.Utilities[elIndex].Price</strong> @Model.Currency.Name =  <strong> @Math.Round(Model.ElCharges,2) </strong> @Model.Currency.Name;
+        </font>
+    }
+    <br />
+}
+
+@if (Model.WaterUsage > 0)
+{
+    <img src=@Model.Utilities[waterIndex].ImageIconPath style="width:auto; height:40px" />
+    <font color="red" size="4"> <strong>@Model.Utilities[waterIndex].Name.ToUpper()</strong></font>
+    <font size="4">
+        : <strong>@Math.Round(Model.WaterUsage, 2) </strong> @Model.Utilities[waterIndex].Unit.Name
+        x <strong> @Model.Utilities[waterIndex].Price</strong> @Model.Currency.Name =  <strong> @Math.Round(Model.WaterCharges,2) </strong> @Model.Currency.Name;
+    </font>
+    <br />
+}
+@if (Model.HeatUsage > 0)
+{
+    <img src=@Model.Utilities[heatIndex].ImageIconPath style="width:auto; height:40px" />
+    <font color="red" size="4"> <strong>@Model.Utilities[heatIndex].Name.ToUpper()</strong></font>
+    <font size="4">
+        : <strong>@Math.Round(Model.HeatUsage, 2) </strong> @Model.Utilities[heatIndex].Unit.Name
+        x <strong> @Model.Utilities[heatIndex].Price</strong> @Model.Currency.Name =  <strong> @Math.Round(Model.HeatCharges,2) </strong> @Model.Currency.Name;
+    </font>
+    <br />
+}
+
+@if (Model.GasUsage > 0)
+{   
+    <img src=@Model.Utilities[gasIndex].ImageIconPath style="width:auto; height:40px" />
+    <font color="red" size="4"> <strong>@Model.Utilities[gasIndex].Name.ToUpper()</strong></font>
+    <font size="4">
+        : <strong>@Math.Round(Model.GasUsage, 2) </strong> @Model.Utilities[gasIndex].Unit.Name
+        x <strong> @Model.Utilities[gasIndex].Price</strong> @Model.Currency.Name =  <strong> @Math.Round(Model.GasCharges,2) </strong> @Model.Currency.Name;
+    </font>    
+}
+<h3><strong>Total charges: @Math.Round(Model.TotalCharges, 2) @Model.Currency.Name</strong></h3>
+
+<div id="containerUtilitiesCharges" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        Highcharts.chart('containerUtilitiesCharges', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: 0,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: 'Utilities<br>charges',
+                            align: 'center',
+                            verticalAlign: 'middle',
+                            y: 40
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                dataLabels: {
+                                    enabled: true,
+                                    distance: -50,
+                                    style: {
+                                        fontWeight: 'bold',
+                                        color: 'white'
+                                    }
+                                },
+                                startAngle: -90,
+                                endAngle: 90,
+                                center: ['50%', '75%']
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: 'Value',
+                            innerSize: '50%',
+                            data: [
+                                ['@Model.Utilities[i++].Name', @Model.ElCharges],                                
+                                ['@Model.Utilities[i++].Name', @Model.WaterCharges],
+                                ['@Model.Utilities[i++].Name', @Model.HeatCharges],
+                                ['@Model.Utilities[i].Name', @Model.GasCharges]
+                            ]
+                        }]
+                        });
+                        })
+</script>
+
+
+

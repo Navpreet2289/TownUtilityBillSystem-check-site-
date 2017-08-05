@@ -1,0 +1,67 @@
+﻿    @model IEnumerable<TownUtilityBillSystem.METER>
+
+@{
+    ViewBag.Title = "ShowAllMeters";
+    int rowNumber = 1;
+}
+
+<h2>All utility meters</h2>
+<h4>Total quantity: @Model.Count()</h4>
+<div class="row">
+    <div class="col-md-4 margin-top-20">
+        <a href="@Url.Action("CreateMeter", "Meter")" class="btn btn-primary btn-large btn-block">
+            <span class=" glyphicon glyphicon-plus-sign"></span> Create the new meter
+        </a>
+    </div>
+</div>
+<br />
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Serial #</th>
+        <th>Type</th>       
+        <th>Release</th>
+        <th>Varification</th>        
+        <th>Options</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@(rowNumber++)</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SERIAL_NUMBER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.METER_TYPE.NAME)
+        </td>
+        <td>
+            @item.RELEASE_DATE.Year.ToString()<text>-</text>@item.RELEASE_DATE.Month.ToString()<text>-</text>@item.RELEASE_DATE.Day
+        </td>
+        <td>
+            @item.VARIFICATION_DATE.Year.ToString()<text>-</text>@item.VARIFICATION_DATE.Month.ToString()<text>-</text>@item.VARIFICATION_DATE.Day
+        </td>        
+        
+        <td>
+            @Html.ActionLink("Edit", "EditMeter", new { meterId = item.ID }) |
+            @Html.ActionLink("Data", "ShowMeterData", new { meterId=item.ID }) |
+            @Html.ActionLink("Delete", "DeleteMeter", new { meterId = item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div class="row">
+    <div class="col-md-4 margin-top-20">
+        <a href="@Url.Action("Create New", "Create")" class="btn btn-primary btn-large btn-block">
+            <span class=" glyphicon glyphicon-plus-sign"></span> Create
+        </a>
+    </div>
+</div>
+<hr />
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+

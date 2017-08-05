@@ -1,0 +1,68 @@
+﻿@model TownUtilityBillSystem.Models.BillModel
+
+@{
+    ViewBag.Title = "ShowBillPaidInfo";
+    int rowNumber = 1;
+}
+<h3><strong> The bill #@Model.Bill.Number is paid</strong></h3>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Bill number</th>
+        <th>Customer</th>
+        <th>Bill date</th>
+        <th>Period</th>
+        <th>Sum</th>
+        <th>Paid</th>
+    </tr>
+
+    <tr>
+        <td>@(rowNumber++)</td>
+        <td>
+            @Html.DisplayFor(model=>model.Bill.Number)
+        </td>
+        @if (Model.CustomerModel.Customer.Surname != null || Model.CustomerModel.Customer.Surname != "")
+            {
+            <td>
+                @Html.DisplayFor(model => Model.CustomerModel.Customer.Surname) @Html.DisplayFor(model => Model.CustomerModel.Customer.Name)
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.DisplayFor(model => Model.CustomerModel.Customer.Name)
+            </td>
+        }
+        <td>
+            @Model.Bill.Date.Year.ToString()<text>-</text>@Model.Bill.Date.Month.ToString()<text>-</text>@Model.Bill.Date.Day.ToString()
+        </td>
+        <td>
+            @Html.DisplayFor(model => Model.Bill.Period)
+        </td>
+        <td>
+            @Html.DisplayFor(model => Model.Bill.Sum) <text> </text>  @Model.Currency.ToString()
+        </td>
+        <td>
+            @Html.DisplayFor(model => Model.Bill.Paid)
+        </td>
+        <td>
+            @Html.ActionLink("Show", "ShowBill", new { bill_Id = Model.Bill.Id }) |
+            @Html.ActionLink("Delete", "DeleteBill", new { bill_Id = Model.Bill.Id })
+        </td>
+    </tr>
+
+</table>
+
+<a href="@Url.Action("PayOnLineBill", "Bill")" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-usd"></span> <strong>Pay another bill</strong>
+</a>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-home"></span> <strong>Back to main menu</strong>
+</a>
+
+
+
+
+

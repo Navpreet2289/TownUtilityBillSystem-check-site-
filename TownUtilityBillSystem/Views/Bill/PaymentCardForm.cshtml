@@ -1,0 +1,116 @@
+﻿@model TownUtilityBillSystem.Models.PaymentCard.PaymentCardModel
+
+@{
+    ViewBag.Title = "PaymentCardForm";
+}
+
+
+
+<div class="jumbotron">
+    @using (Html.BeginForm("PaymentCardForm", "Bill", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            
+            <h3><strong>Pay-online the bill @Model.Bill.Number <text style="color:red">(trial imitation) </text> </strong></h3>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.PaymentCard.Number, htmlAttributes: new { @class = "control-label col-md-3" })                
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.PaymentCard.Number, new { htmlAttributes = new { @class = "form-control" } })
+                    @if(ViewBag.WrongCardNumberError != null)
+                    {
+                        <font style="color:brown">@ViewBag.WrongCardNumberError</font>
+                    }
+                    else
+                    {
+                        @Html.ValidationMessageFor(model => model.PaymentCard.Number, "", new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+
+           
+            <div class="form-group">
+                @Html.LabelFor(model => model.PaymentCard.Surname, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.PaymentCard.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PaymentCard.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PaymentCard.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.PaymentCard.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PaymentCard.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+                        
+            <div class="form-group">
+                @Html.LabelFor(model => model.PaymentCard.ExpireDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @if (Model.PaymentCard.ExpireDate == null || Model.PaymentCard.ExpireDate.ToString() == ("1/1/0001 12:00:00 AM"))
+                    {
+                        @Html.EditorFor(model => model.PaymentCard.ExpireDate, new { htmlAttributes = new { @class = "form-control", @Value = "month year" } })
+                    }
+                    else
+                    {
+                        string expireDate = Model.PaymentCard.ExpireDate.ToString("MM yyyy");
+
+                        @Html.EditorFor(model => model.PaymentCard.ExpireDate, new { htmlAttributes = new { @class = "form-control", @Value = expireDate } })
+                    }
+                    @if (ViewBag.WrongExpireDateError != null)
+                    {
+                        <font style="color:brown">@ViewBag.WrongExpireDateError</font>
+                    }
+                    else
+                    {
+                        @Html.ValidationMessageFor(model => model.PaymentCard.ExpireDate, "", new { @class = "text-danger" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PaymentCard.CVV, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.PaymentCard.CVV, new { htmlAttributes = new { @class = "form-control" , @Type = "password" } })
+                    @if (ViewBag.WrongCVVError != null)
+                    {
+                        <font style="color:brown">@ViewBag.WrongCVVError</font>
+                    }
+                    else
+                    {
+                        @Html.ValidationMessageFor(model => model.PaymentCard.CVV, "", new { @class = "text-danger" })                        
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Paying sum (" + Model.Currency.Name + ")", htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.PayingSum, new { htmlAttributes = new { @class = "form-control", @Value = Model.Bill.Sum } })
+                    @Html.ValidationMessageFor(model => model.PayingSum, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PaymentCard.Type, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.PaymentCard.Type.Id, new SelectList(Model.PaymentCardTypes, "Id", "Name"), "--Select card type--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PaymentCard.Type.Id)
+                </div>
+            </div>
+            <div style="visibility:hidden">
+                @Html.EditorFor(model => model.Bill.Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Bill.Sum, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <input type="submit" value="Pay the bill" class="btn btn-primary btn-large btn-block" />                    
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,155 @@
+﻿@model TownUtilityBillSystem.Models.CustomerModel
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@{
+    ViewBag.Title = "ShowDetailsForCustomer";
+    int rowNumber = 1;
+    var country = "Denmark";
+}
+
+<style>
+    #map-canvas {
+        width: 370px;
+        height: 250px;
+    }
+</style>
+
+
+@if (Model.Customer == null)
+{
+    <h2><strong>Sorry, no data</strong></h2>
+}
+
+else
+{
+    <div class="row">
+        <div class="col-xs-4">
+            <h3><strong>Customer:</strong></h3>
+            
+            <h4><strong> Account:</strong> @Model.Customer.Account</h4>
+            @if (Model.Customer.Surname == null)
+            {
+                <h4><strong> Name:</strong> @Model.Customer.Name</h4>
+            }
+            else
+            {
+                <h4><strong> Surname/Name:</strong> @Model.Customer.Surname @Model.Customer.Name</h4>
+            }
+
+            <h4><strong> Email:</strong> @Model.Customer.Email</h4>
+            <h4><strong> Phone:</strong> @Model.Customer.Phone</h4>
+            <h4><strong> Square:</strong> @Model.Customer.Address.Building.Square sq. m.</h4>
+            <h4><strong> Type:</strong> @Model.Customer.CustomerType.Name</h4>
+        </div>
+
+        <div class="col-xs-4">
+            <br />
+            <img src=@Model.Customer.Address.Building.ImagePath />
+        </div>
+        <div class="col-xs-4" id="map-canvas">
+        </div>
+    </div>
+
+    <hr />
+        <h4><strong> Address:</strong> @Model.Customer.Address.Building.Number, @Model.Customer.Address.Street.Name str., @Model.Customer.Address.Town.Name, @country @Model.Customer.Address.Index.Value</h4>
+        <hr />
+        <h4><strong> Meters:</strong></h4>
+        <table class="table" id="meters_table">
+            <tr>
+                <th>#</th>
+                <th>Serial #</th>
+                <th>Type</th>
+                <th>Utility</th>
+                <th>Release</th>
+                <th>Varification</th>
+                <th>Options</th>
+            </tr>
+            @foreach (var item in Model.Meters)
+            {
+                <tr>
+                    <td>@(rowNumber++)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SerialNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeterType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeterType.Utility.Name)
+                    </td>
+                    <td>
+                        @item.ReleaseDate.Year.ToString()<text>-</text>@item.ReleaseDate.Month.ToString()<text>-</text>@item.ReleaseDate.Day
+                    </td>
+                    <td>
+                        @item.VarificationDate.Year.ToString()<text>-</text>@item.VarificationDate.Month.ToString()<text>-</text>@item.VarificationDate.Day
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "EditMeter", "Meter", new { meterId = item.Id }, null) |
+                        @Html.ActionLink("Data", "ShowMeterData", "Meter", new { meterId = item.Id }, null) |
+                        @Html.ActionLink("Delete", "DeleteMeter", "Meter", new { meterId = item.Id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 margin-top-20">
+                <a href="@Url.Action("ShowAllUtilityCharts", "Meter", new { customerId = @Model.Customer.Id }, null)" class="btn btn-primary btn-large btn-block">
+                    <span class=" glyphicon glyphicon-stats"></span> Show all utility usage
+                </a>
+            </div>
+            <div class="col-md-4 margin-top-20">
+                <a href="@Url.Action("ShowAllBillsForCustomer", "Bill", new { customerId = @Model.Customer.Id }, null)" class="btn btn-primary btn-large btn-block">
+                    <span class=" glyphicon glyphicon-usd"></span> Show all bills
+                </a>
+            </div>
+        </div>
+}
+<hr />
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7oyKXdpaKqurqotVj7_bhl9V9_7B5cMQ&libraries=places"
+        type="text/javascript"></script>
+<script>
+    var map;
+    var marker;
+    var country = "Denmark";
+    var town = @Html.Raw(Json.Encode(@ViewBag.currentAddressForJS.Town.Name));
+    var street = @Html.Raw(Json.Encode(@ViewBag.currentAddressForJS.Street.Name));
+    var building = @Html.Raw(Json.Encode(@ViewBag.currentAddressForJS.Building.Number));
+
+    var mapDiv;
+    var address;
+    var geocoder;
+    var mapBuildingZoom = 13;
+
+
+    $(document).ready(function () {
+        mapDiv = document.getElementById('map-canvas');
+        address = building + street + town + country;
+        geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({
+            "address": address
+        }, function (results, status) {
+            map = new google.maps.Map(mapDiv, {
+                center: results[0].geometry.location,
+                zoom: mapBuildingZoom,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            })
+            marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map,
+                draggable: true
+            });
+        });
+    });
+</script>
+

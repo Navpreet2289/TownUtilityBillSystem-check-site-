@@ -1,0 +1,56 @@
+﻿@model TownUtilityBillSystem.Models.CustomerModel
+
+@{
+    ViewBag.Title = "ShowAllCustomers";
+    int rowNumber = 1;
+}
+
+<h2>Customers:</h2>
+
+<h4>Total quantity: @Model.Customers.Count</h4>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Account #</th>
+        <th>Surname/Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Type</th>
+        <th>Options</th>
+    </tr>
+
+
+    @foreach (var item in Model.Customers)
+    {
+        <tr>
+            <td>@(rowNumber++)</td>
+            <td>
+                @Html.DisplayFor(model => item.Account)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Surname) @Html.DisplayFor(model => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CustomerType.Name)
+            </td>
+
+            <td>
+                @Html.ActionLink("Details", "ShowDetailsForCustomer", new { customerId = item.Id }) |
+               @Html.ActionLink("Edit", "EditCustomer", new { customerId = item.Id }) |
+                <a href="" onclick="alert('You have no administrator rights!')">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+

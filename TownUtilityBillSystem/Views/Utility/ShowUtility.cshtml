@@ -1,0 +1,83 @@
+﻿@model TownUtilityBillSystem.Models.UtilityModel
+
+@{
+    ViewBag.Title = "ShowUtility";
+    int i = 0;
+}
+
+
+<div class="jumbotron">
+    <div style="font-size:medium">
+        <h3><strong>Utility:</strong></h3>
+        @if (Model.Utility.ImageIconPath != "")
+        {
+            <img src=@Model.Utility.ImageIconPath style="width:auto; height:40px" />
+        }
+
+        <font color="red" size="5"> <strong>@Model.Utility.Name.ToUpper()</strong></font>
+        <br />
+        @Html.DisplayNameFor(model => model.Utility.Price) <text>--</text>
+        @if (Model.Utility.BigUsagePrice == null || Model.Utility.BigUsagePrice == 0)
+        {
+            <strong>
+                @Html.DisplayFor(model => model.Utility.Price) <text> </text>  @Model.Currency.ToString()
+            </strong>
+            <text>per 1</text>   @Html.DisplayFor(model => model.Utility.Unit.Name)
+        }
+        else
+        {
+            <strong>
+                @Html.DisplayFor(model => model.Utility.Price) <text> </text> @Model.Currency.ToString()
+            </strong><text>per 1</text>  @Html.DisplayFor(model => model.Utility.Unit.Name) <text>(less than</text>   @Decimal.ToInt32(@Model.Utility.UsageForStandartPrice) <text> </text>  @Html.DisplayFor(model => model.Utility.Unit.Name)<text>)</text>
+            <br />
+            @Html.DisplayNameFor(model => model.Utility.BigUsagePrice) <text>--</text>
+            <strong>
+                @Html.DisplayFor(model => model.Utility.BigUsagePrice)<text> </text>  @Model.Currency.ToString()
+            </strong> <text>per 1</text>  @Html.DisplayFor(model => model.Utility.Unit.Name) <text>(less than</text> @Decimal.ToInt32(@Model.Utility.UsageForStandartPrice) <text> </text> @Html.DisplayFor(model => model.Utility.Unit.Name)<text>)</text>
+        }
+        <br />
+        <text>Total customers for this utility -- <strong> @Model.MeterQty </strong></text>
+    </div>
+    <div class="row">       
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("ShowMeterTypesForUtility", "Meter", new { utilityName = Model.Utility.Name }, null)" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-dashboard"></span> Meter types
+            </a>
+        </div>
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("EditUtility", "Utility", new { utilityId = Model.Utility.Id }, null)" class="btn btn-primary btn-large btn-block" >
+                <span class=" glyphicon glyphicon-edit"></span> Edit utility parameters
+            </a>
+        </div>
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("ShowAllUtilitiesPrices", "Utility")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-list"></span> Show all utilities
+            </a>
+        </div>
+    </div>
+    <hr />
+    <text><strong>Other utilities:</strong></text>
+    <div class="row">
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("ShowUtility", "Utility", new { utilityName = Model.Utilities[0].Name}, null)" class="btn btn-primary btn-large btn-block" style="background-color:green">
+                <span class=" glyphicon glyphicon-info-sign"></span> @Model.Utilities[i++].Name
+            </a>
+        </div>
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("ShowUtility", "Utility", new { utilityName = Model.Utilities[1].Name}, null)" class="btn btn-primary btn-large btn-block" style="background-color:green">
+                <span class=" glyphicon glyphicon-info-sign"></span> @Model.Utilities[i++].Name
+            </a>
+        </div>
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("ShowUtility", "Utility", new { utilityName = Model.Utilities[2].Name}, null)" class="btn btn-primary btn-large btn-block" style="background-color:green">
+                <span class=" glyphicon glyphicon-info-sign"></span> @Model.Utilities[i++].Name
+            </a>
+        </div>
+    </div>
+    <hr />
+    <a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+        <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+    </a>
+</div>
+
+

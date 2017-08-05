@@ -1,0 +1,56 @@
+﻿@model TownUtilityBillSystem.Models.MeterItemModel
+
+@{
+    ViewBag.Title = "EditMeterData";
+    var country = "Denmark";
+}
+<style>
+    mark {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+
+<div>
+    <h3><strong>Meter data:</strong></h3>
+    <h4><strong> Utility:</strong> @Model.Meter.MeterType.Utility.Name</h4>
+    <h4><strong> Meter type:</strong> @Model.Meter.MeterType.Name</h4>
+    <h4><strong> Serial Number:</strong> @Model.Meter.SerialNumber</h4>
+    <h4><strong> Release date: </strong> @Model.Meter.ReleaseDate.Year.ToString()<text>-</text>@Model.Meter.ReleaseDate.Month.ToString()<text>-</text>@Model.Meter.ReleaseDate.Day</h4>
+    <h4><strong> Varification date:</strong> @Model.Meter.VarificationDate.Year.ToString()<text>-</text>@Model.Meter.VarificationDate.Month.ToString()<text>-</text>@Model.Meter.VarificationDate.Day</h4>
+    <h4><strong> Address:</strong> @Model.Meter.Address.Building.Number, @Model.Meter.Address.Street.Name str., @Model.Meter.Address.Town.Name, @country @Model.Meter.Address.Index.Value</h4>
+    <p>
+        <hr />
+        <h4><strong>Measure date: </strong>@Model.MeterItem.Date.Year.ToString()<text>-</text>@Model.MeterItem.Date.Month.ToString()<text>-</text>@Model.MeterItem.Date.Day <strong>Current value: </strong><mark>@Math.Round(Model.MeterItem.Value, 2)</mark> @Model.Meter.MeterType.Utility.Unit.Name</h4>
+        @using (Html.BeginForm("EditMeterData", "Meter", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })            
+            <div class="form-group">
+                 @Html.LabelFor(m => m.MeterItem.Value, new { @class = "col-md-2 control-label" })                 
+                <div class="col-md-10">                    
+                    @Html.HiddenFor(m => m.MeterItem.Id)                      
+                    @Html.TextBoxFor(m => m.MeterItem.Value, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary btn-large btn-block" value="Save new value" />
+                </div>
+            </div>
+        }
+    </p>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+

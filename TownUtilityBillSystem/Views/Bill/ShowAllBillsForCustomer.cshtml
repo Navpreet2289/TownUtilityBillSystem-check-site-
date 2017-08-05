@@ -1,0 +1,96 @@
+﻿@model TownUtilityBillSystem.Models.BillModel
+
+@{
+    ViewBag.Title = "ShowAllBillsForCustomer";
+    int rowNumber = 1;
+    var country = "Denmark";
+}
+
+
+@if (Model.CustomerModel.Customer == null)
+{
+    <h2><strong>Sorry, no data</strong></h2>
+}
+
+else
+{
+    <div style="overflow:auto;" id="customerData">
+        @if (Model.CustomerModel.Customer.Surname == null)
+        {
+            <h5><strong>Customer: Name:</strong> @Model.CustomerModel.Customer.Name</h5>
+        }
+        else
+        {
+            <h5><strong>Customer: Surname/Name:</strong> @Model.CustomerModel.Customer.Surname @Model.CustomerModel.Customer.Name</h5>
+        }
+
+        <h5><strong>Account:</strong> @Model.CustomerModel.Customer.Account<strong> Email:</strong> @Model.CustomerModel.Customer.Email <strong> Phone:</strong> @Model.CustomerModel.Customer.Phone</h5>
+        <h5>
+            <strong> Address:</strong>
+            @Model.CustomerModel.Customer.Address.Building.Number, @Model.CustomerModel.Customer.Address.Street.Name str.,
+            @Model.CustomerModel.Customer.Address.Town.Name, @country @Model.CustomerModel.Customer.Address.Index.Value
+            <strong> Square:</strong>
+            @Model.CustomerModel.Customer.Address.Building.Square sq. m.
+            <strong> Type:</strong>
+            @Model.CustomerModel.Customer.CustomerType.Name
+        </h5>
+    </div>
+}
+@if (Model.Bills.Count != 0)
+{
+    <h3>Bills:</h3>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Bill number</th>
+            <th>Bill date</th>
+            <th>Period</th>
+            <th>Sum</th>
+            <th>Paid</th>
+        </tr>
+
+        @foreach (var item in Model.Bills)
+        {
+            <tr>
+                <td>@(rowNumber++)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @item.Date.Year.ToString()<text>-</text>@item.Date.Month.ToString()<text>-</text>@item.Date.Day.ToString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Period)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sum) <text> </text>  @Model.Currency.ToString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paid)
+                </td>
+                <td>
+                    @Html.ActionLink("Show", "ShowBill", new { bill_Id = item.Id }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteBill", new { bill_Id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="row">
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("CreateBill", "Bill")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-plus-sign"></span> Create the new bill
+            </a>
+        </div>
+    </div>
+    <hr />
+
+    <a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+        <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+    </a>
+}
+else
+{
+    <h2> <strong>Sorry, no data</strong> </h2>
+   
+}

@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TownUtilityBillSystemModelStoreContainer" CdmEntityContainer="TownUtilityBillSystemEntities">
+    <EntitySetMapping Name="ADDRESSes">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.ADDRESS">
+        <MappingFragment StoreEntitySet="ADDRESS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="INDEX_ID" ColumnName="INDEX_ID" />
+          <ScalarProperty Name="TOWN_ID" ColumnName="TOWN_ID" />
+          <ScalarProperty Name="STREET_ID" ColumnName="STREET_ID" />
+          <ScalarProperty Name="BUILDING_ID" ColumnName="BUILDING_ID" />
+          <ScalarProperty Name="FLAT_PART_ID" ColumnName="FLAT_PART_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BILLs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.BILL">
+        <MappingFragment StoreEntitySet="BILL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+          <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+          <ScalarProperty Name="SUM" ColumnName="SUM" />
+          <ScalarProperty Name="PAID" ColumnName="PAID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BUILDINGs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.BUILDING">
+        <MappingFragment StoreEntitySet="BUILDING">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+          <ScalarProperty Name="SQUARE" ColumnName="SQUARE" />
+          <ScalarProperty Name="STREET_ID" ColumnName="STREET_ID" />
+          <ScalarProperty Name="IMAGE_ID" ColumnName="IMAGE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUSTOMERs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.CUSTOMER">
+        <MappingFragment StoreEntitySet="CUSTOMER">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACCOUNT" ColumnName="ACCOUNT" />
+          <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="ADDRESS_ID" ColumnName="ADDRESS_ID" />
+          <ScalarProperty Name="CUSTOMER_TYPE_ID" ColumnName="CUSTOMER_TYPE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUSTOMER_TYPE">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.CUSTOMER_TYPE">
+        <MappingFragment StoreEntitySet="CUSTOMER_TYPE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FLAT_PART">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.FLAT_PART">
+        <MappingFragment StoreEntitySet="FLAT_PART">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NUMBER" ColumnName="NUMBER" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="SQUARE" ColumnName="SQUARE" />
+          <ScalarProperty Name="BUILDING_ID" ColumnName="BUILDING_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMAGEBUILDINGs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.IMAGEBUILDING">
+        <MappingFragment StoreEntitySet="IMAGEBUILDING">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMAGENEWS">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.IMAGENEWS">
+        <MappingFragment StoreEntitySet="IMAGENEWS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IMAGEUTILITies">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.IMAGEUTILITY">
+        <MappingFragment StoreEntitySet="IMAGEUTILITY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PATH" ColumnName="PATH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Indices">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.INDEX">
+        <MappingFragment StoreEntitySet="INDEX">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="METERs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.METER">
+        <MappingFragment StoreEntitySet="METER">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SERIAL_NUMBER" ColumnName="SERIAL_NUMBER" />
+          <ScalarProperty Name="ADDRESS_ID" ColumnName="ADDRESS_ID" />
+          <ScalarProperty Name="METER_TYPE_ID" ColumnName="METER_TYPE_ID" />
+          <ScalarProperty Name="RELEASE_DATE" ColumnName="RELEASE_DATE" />
+          <ScalarProperty Name="VARIFICATION_DATE" ColumnName="VARIFICATION_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="METER_ITEM">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.METER_ITEM">
+        <MappingFragment StoreEntitySet="METER_ITEM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="METER_ID" ColumnName="METER_ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="METER_TYPE">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.METER_TYPE">
+        <MappingFragment StoreEntitySet="METER_TYPE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="VARIFICATION_PERIOD_YEARS" ColumnName="VARIFICATION_PERIOD_YEARS" />
+          <ScalarProperty Name="UTILITY_ID" ColumnName="UTILITY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NEWS">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.NEWS">
+        <MappingFragment StoreEntitySet="NEWS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="IMAGE_ID" ColumnName="IMAGE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NEWSCHAPTERs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.NEWSCHAPTER">
+        <MappingFragment StoreEntitySet="NEWSCHAPTER">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+          <ScalarProperty Name="NEWS_ID" ColumnName="NEWS_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STREETs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.STREET">
+        <MappingFragment StoreEntitySet="STREET">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="TOWN_ID" ColumnName="TOWN_ID" />
+          <ScalarProperty Name="INDEX_ID" ColumnName="INDEX_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEMPERATUREs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.TEMPERATURE">
+        <MappingFragment StoreEntitySet="TEMPERATURE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="TOWN_ID" ColumnName="TOWN_ID" />
+          <ScalarProperty Name="MINVALUE" ColumnName="MINVALUE" />
+          <ScalarProperty Name="MAXVALUE" ColumnName="MAXVALUE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TOWNs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.TOWN">
+        <MappingFragment StoreEntitySet="TOWN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UNITs">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.UNIT">
+        <MappingFragment StoreEntitySet="UNIT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UTILITies">
+      <EntityTypeMapping TypeName="TownUtilityBillSystemModel.UTILITY">
+        <MappingFragment StoreEntitySet="UTILITY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="USAGEFORSTANDARTPRICE" ColumnName="USAGEFORSTANDARTPRICE" />
+          <ScalarProperty Name="BIGUSAGEPRICE" ColumnName="BIGUSAGEPRICE" />
+          <ScalarProperty Name="UNIT_ID" ColumnName="UNIT_ID" />
+          <ScalarProperty Name="IMAGE_ID" ColumnName="IMAGE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

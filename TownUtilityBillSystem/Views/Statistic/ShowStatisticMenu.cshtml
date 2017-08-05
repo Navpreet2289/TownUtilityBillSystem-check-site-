@@ -1,0 +1,29 @@
+﻿@model TownUtilityBillSystem.Models.UtilityModel
+
+@{
+    ViewBag.Title = "ShowStatisticMenu";
+}
+
+<div class="jumbotron">
+    <h3><strong>Statistic (usage):</strong></h3>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="@Url.Action("ShowPrivateCustomers", "Customer")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-user"></span> Private customers usage
+            </a>
+            <a href="@Url.Action("ShowLegalCustomers", "Customer")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-home"></span> Legal customers usage
+            </a>
+            <hr />
+            <a href="@Url.Action("ShowTemperatureChart", "Chart")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-globe"></span> Temperature
+            </a>
+        </div>
+    </div>
+    <hr/>
+    <a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+        <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+    </a>
+</div>
+
+

@@ -1,0 +1,182 @@
+﻿@model TownUtilityBillSystem.Models.MeterItemModel
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@{
+    ViewBag.Title = "ShowMeterData";
+    int rowNumber = 1;
+}
+
+
+@if (Model.MeterItems.Count == 0)
+{
+    <h2><strong>Sorry, no data</strong></h2>
+}
+
+else
+{
+    var country = "Denmark";
+
+    <h2><strong>Meter data:</strong></h2>
+    <h4><strong> Utility:</strong> @Model.Meter.MeterType.Utility.Name</h4>
+    <h4><strong> Meter type:</strong> @Model.Meter.MeterType.Name</h4>
+    <h4><strong> Serial Number:</strong> @Model.Meter.SerialNumber</h4>
+    <h4><strong> Release date: </strong> @Model.Meter.ReleaseDate.Year.ToString()<text>-</text>@Model.Meter.ReleaseDate.Month.ToString()<text>-</text>@Model.Meter.ReleaseDate.Day</h4>
+    <h4><strong> Varification date:</strong> @Model.Meter.VarificationDate.Year.ToString()<text>-</text>@Model.Meter.VarificationDate.Month.ToString()<text>-</text>@Model.Meter.VarificationDate.Day</h4>
+    <h4><strong> Address:</strong> @Model.Meter.Address.Building.Number, @Model.Meter.Address.Street.Name str., @Model.Meter.Address.Town.Name, @country @Model.Meter.Address.Index.Value</h4>
+
+    <div class="row">
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("RedirectShowAllUtilityCharts", "Meter", new { meterId = @Model.Meter.Id }, null)" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-stats"></span> Show all utility usage
+            </a>
+        </div>
+        <div class="col-md-4 margin-top-20">
+            <a href="@Url.Action("CreateMeterItem", "Meter")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-plus-sign"></span> Create the new meter data
+            </a>
+        </div>
+    </div>
+
+    <div id="chartArear" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>
+                Date
+            </th>
+            <th>
+                Value (@Model.Meter.MeterType.Utility.Unit.Name)
+            </th>
+            <th>Options</th>
+        </tr>
+
+        @foreach (var item in Model.MeterItems)
+        {
+            <tr>
+                <td>@(rowNumber++)</td>
+                <td>
+                    @item.Date.Year.ToString()<text>-</text>@item.Date.Month.ToString()<text>-</text>@item.Date.Day
+                </td>
+                <td>
+                    @Math.Round(item.Value, 2)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit data", "EditMeterData", new { meterItemId = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteMeterItem", new { meterItemId = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document)
+        .ready(function () {
+            $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetMetertDataForChart", "Meter")',
+                    data: { meterId: @Model.Meter.Id },
+                    dataType: "json",
+                    success: function (data) {
+                        var series = [
+                            {
+                                type: 'column',
+                                name: ' @Model.Meter.MeterType.Utility.Name.ToString() usage' ,
+                                data: data
+                            }
+                        ];
+                        createChart("#chartArea", "Months' usage (year's history)", series);
+                    }
+                });
+        });
+    function createChart(chartcontainer, title, data) {
+        Highcharts.chart('chartArear', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: title
+            },
+            xAxis: {
+                categories: [
+                    data[0].data[0].MonthName,
+                    data[0].data[1].MonthName,
+                    data[0].data[2].MonthName,
+                    data[0].data[3].MonthName,
+                    data[0].data[4].MonthName,
+                    data[0].data[5].MonthName,
+                    data[0].data[6].MonthName,
+                    data[0].data[7].MonthName,
+                    data[0].data[8].MonthName,
+                    data[0].data[9].MonthName,
+                    data[0].data[10].MonthName,
+                    data[0].data[11].MonthName,
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Value, @Model.Meter.MeterType.Utility.Unit.Name',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' @Model.Meter.MeterType.Utility.Unit.Name'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                enabled: false,
+            },
+            credits: {
+                enabled: false
+            },            
+            series: [{
+                name: '@Model.Meter.MeterType.Utility.Name',
+                data: [
+                    [data[0].data[0].MonthName, data[0].data[0].Value],
+                    [data[0].data[1].MonthName, data[0].data[1].Value],
+                    [data[0].data[2].MonthName, data[0].data[2].Value],
+                    [data[0].data[3].MonthName, data[0].data[3].Value],
+                    [data[0].data[4].MonthName, data[0].data[4].Value],
+                    [data[0].data[5].MonthName, data[0].data[5].Value],
+                    [data[0].data[6].MonthName, data[0].data[6].Value],
+                    [data[0].data[7].MonthName, data[0].data[7].Value],
+                    [data[0].data[8].MonthName, data[0].data[8].Value],
+                    [data[0].data[9].MonthName, data[0].data[9].Value],
+                    [data[0].data[10].MonthName, data[0].data[10].Value],
+                    [data[0].data[11].MonthName, data[0].data[11].Value]
+                ],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    }
+</script>

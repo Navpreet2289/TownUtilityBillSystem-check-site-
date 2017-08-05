@@ -1,0 +1,88 @@
+﻿@model TownUtilityBillSystem.Models.BillModel
+
+@{
+    ViewBag.Title = "ShowFoundBills";
+    int rowNumber = 1;
+}
+
+<style>
+    mark {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+
+@if (Model.Bills.Count == 0)
+{
+    <h2>No any bill is found</h2>
+}
+
+else if (Model.Bills.Count == 1)
+{
+    <h2>Found 1 customer</h2>
+}
+else
+{
+    <h2>Found @Model.Bills.Count bills</h2>
+}
+<h4>Search filter: <mark> <strong> @ViewBag.SearchString </strong></mark></h4>
+
+    @if (Model.Bills.Count != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Bill number</th>
+                <th>Customer</th>
+                <th>Bill date</th>
+                <th>Period</th>
+                <th>Sum</th>
+                <th>Paid</th>
+            </tr>
+
+            @foreach (var item in Model.Bills)
+            {
+                <tr>
+                    <td>@(rowNumber++)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    @if (item.Customer.Surname != null || item.Customer.Surname != "")
+                        {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.Surname) @Html.DisplayFor(modelItem => item.Customer.Name)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.Name)
+                        </td>
+                    }
+                    <td>
+                        @item.Date.Year.ToString()<text>-</text>@item.Date.Month.ToString()<text>-</text>@item.Date.Day.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Period)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sum) <text> </text>  @Model.Currency.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Paid)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Show", "ShowBill", new { bill_Id = item.Id }) |
+                        @Html.ActionLink("Delete", "DeleteBill", new { bill_Id = item.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+
+
+

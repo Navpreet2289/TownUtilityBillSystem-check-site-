@@ -1,0 +1,60 @@
+﻿@model TownUtilityBillSystem.Models.MeterTypeModel
+
+@{
+    ViewBag.Title = "ShowMeterTypesForUtility";
+    int rowNumber = 1;
+}
+
+<h2>@Model.Utility.Name meter types</h2>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeterType.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeterType.VarificationPeriod)
+        </th>
+        <th>Options</th>
+    </tr>
+
+
+    @foreach (var item in Model.MeterTypes)
+    {
+        <tr>
+            <td>@(rowNumber++)</td>
+            <td>
+                @Html.DisplayFor(model => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.VarificationPeriod) <text> years</text>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditMeterType", new { meterTypeId = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteMeterType", new { meterTypeId = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="row">
+    <div class="col-md-4 margin-top-20">
+        <a href="@Url.Action("Create New", "Create", new { utilityName = Model.Utility.Name }, null)" class="btn btn-primary btn-large btn-block">
+            <span class=" glyphicon glyphicon-plus-sign"></span> Create
+        </a>
+    </div>
+    <div class="col-md-4 margin-top-20">
+        <a href="@Url.Action("ShowAllMeterTypes", "Meter", new { utilityName = Model.Utility.Name }, null)" class="btn btn-primary btn-large btn-block">
+            <span class=" glyphicon glyphicon-list"></span> All utilities' meter types
+        </a>
+    </div>   
+</div>
+<hr />
+
+
+<a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+    <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+</a>
+
+

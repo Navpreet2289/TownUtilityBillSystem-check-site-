@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "ShowCustomerMenu";
+}
+
+<div class="jumbotron">
+    <h3><strong>Customers:</strong></h3>
+    <div class="row">
+        <div class="col-md-6 margin-top-20">
+            <a href="@Url.Action("ShowPrivateCustomers", "Customer")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-user"></span> Private customers
+            </a>
+            <a href="@Url.Action("ShowLegalCustomers", "Customer")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-home"></span> Legal customers
+            </a>
+        </div>
+        <div class="col-md-6 margin-top-20">
+            <a href="@Url.Action("FindCustomerBy", "Customer")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-search"></span> Find customer
+            </a>
+            <a href="@Url.Action("ShowAllCustomers", "Customer")" class="btn btn-primary btn-large btn-block">
+                <span class=" glyphicon glyphicon-info-sign"></span> All customers
+            </a>
+        </div>
+    </div>
+    <hr />
+    <a href="javascript:history.go(-1)" class="btn btn-link btn-large">
+        <span class=" glyphicon glyphicon-arrow-left"></span> <strong>Back to previous page</strong>
+    </a>
+</div>
+
+
