@@ -1722,6 +1722,23 @@ namespace TownUtilityBillSystem.Controllers
                 context.SaveChanges();
             }
         }
+		
+		private string GetEncodedKeyAndSalt(string password, out string encodedSalt)
+        {
+            int byteSaltSize = 20;
+            string encodedKey = "";
+
+            using (var deriveBytes = new Rfc2898DeriveBytes(password, byteSaltSize))
+            {
+                byte[] salt = deriveBytes.Salt;
+                byte[] key = deriveBytes.GetBytes(byteSaltSize);
+
+                encodedSalt = Convert.ToBase64String(salt);
+                encodedKey = Convert.ToBase64String(key);
+            }
+            return encodedKey;
+        }
+		
         public void FillNewsImages()
         {
             using (var context = new TownUtilityBillSystemEntities())
