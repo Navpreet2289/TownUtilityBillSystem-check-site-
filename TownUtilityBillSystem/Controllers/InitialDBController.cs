@@ -1731,6 +1731,7 @@ namespace TownUtilityBillSystem.Controllers
             using (var deriveBytes = new Rfc2898DeriveBytes(password, byteSaltSize))
             {
 				//add contact data -- Git branch "contact-changes"
+				//add more data -- Git branch "home-changes"
                 byte[] salt = deriveBytes.Salt;
                 byte[] key = deriveBytes.GetBytes(byteSaltSize);
 
